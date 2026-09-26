@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --font-script: "Parisienne", "Brush Script MT", cursive;
+  --font-heading: "Jost", "Montserrat", sans-serif;
+}
+
+:root {
+  --primary-color: #a85c3f;
+  --primary-color-hover: #8f4a30;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Montserrat",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  line-height: 1.5;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@layer components {
+  /* Überschriften: zentral gepflegt, Layout-Varianten (z. B. whitespace-nowrap) bleiben im Markup */
+  .heading-section {
+    @apply text-balance font-heading text-[clamp(2.125rem,1.7rem+1.9vw,3rem)]
+    font-light leading-tight text-[#4a2e22];
+  }
+
+  .heading-card {
+    @apply text-balance font-heading text-[1.625rem]
+    font-extralight leading-tight text-[#4a2e22] 2xl:text-[1.875rem];
+  }
+
+  .heading-script {
+    @apply text-balance font-script 
+    text-[clamp(2.5rem,1.5rem+2.9vw,3.75rem)] font-normal leading-tight text-[#4a2e22];
+  }
+
+  .btn {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: white;
+    color: var(--primary-color-hover);
+    border: 1.5px solid rgba(168, 92, 63, 0.3);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    box-shadow:
+      0 1px 2px rgba(26, 26, 31, 0.04),
+      0 10px 24px -14px rgba(168, 92, 63, 0.35);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .btn:hover {
+    border-color: var(--primary-color);
+    box-shadow:
+      0 1px 2px rgba(26, 26, 31, 0.04),
+      0 14px 28px -14px rgba(168, 92, 63, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+}
