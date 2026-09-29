@@ -66,7 +66,7 @@
 
             <p v-reveal="630" class="mt-auto self-center pt-6">
               <span class="inline-block rounded-full bg-[#eadfd2] px-9 py-2.5 text-lg font-medium text-[#5c3a2a] transition-colors duration-1000 ease-out group-hover:bg-[#e3d3c1]">
-                ab {{ service.price }}&nbsp;€
+                {{ service.price }}&nbsp;€
               </span>
             </p>
           </div>
@@ -90,7 +90,7 @@ const services = [
   },
   {
     title: "Neugeborenen-Shooting",
-    photo: "/Neugeborenen-Packet.jpeg",
+    photo: "/Galerie/Neugeborenen-Packet.jpeg",
     alt: "Schlafendes Neugeborenes im hellen Body auf einer weißen Decke",
     position: "object-[60%_45%]",
     description:
@@ -100,7 +100,7 @@ const services = [
   },
   {
     title: "Familien-Shooting",
-    photo: "/Familien-Packet.jpeg",
+    photo: "/Galerie/Familien-Packet.jpeg",
     alt: "Eltern küssen sich am Seeufer und halten ihr Kleinkind an den Händen",
     position: "object-[50%_60%]",
     description:

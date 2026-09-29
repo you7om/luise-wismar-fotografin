@@ -50,7 +50,7 @@
       <form
         v-reveal
         class="flex w-full flex-col gap-5 lg:col-span-7"
-        action="mailto:hallo@luise-riegel-fotografie.de"
+        action="mailto:luise_riegel_fotografie@gmx.de"
         method="post"
         enctype="text/plain"
       >
@@ -142,8 +142,8 @@
 const channels = [
   {
     label: "E-Mail",
-    value: "hallo@luise-riegel-fotografie.de",
-    href: "mailto:hallo@luise-riegel-fotografie.de",
+    value: "luise_riegel_fotografie@gmx.de",
+    href: "mailto:luise_riegel_fotografie@gmx.de",
     icon: "mail",
     external: false,
   },

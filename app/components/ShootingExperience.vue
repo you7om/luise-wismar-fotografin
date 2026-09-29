@@ -28,7 +28,7 @@
         <NuxtImg
           src="/IMG_8740.jpeg"
           alt="Familie sitzt mit ihrem Kleinkind entspannt auf einer Wiese"
-          sizes="100vw sm:55vw 2xl:740px"
+          sizes="135vw sm:75vw 2xl:1000px"
           class="absolute inset-0 h-full w-full origin-[50%_22%] scale-[1.35] object-cover"
           loading="lazy"
         />

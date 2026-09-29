@@ -29,15 +29,15 @@
           <p class="mt-2">
             Luise Riegel<br>
             Luise Riegel Fotografie<br>
-            Musterstraße 1<br>
+            Kapitänspromenade 15<br>
             23966 Wismar<br>
             Telefon:
-            <a href="tel:+491701234567" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
-              +49 170 1234567
+            <a href="tel:+4915668863978" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
+              0156 68863978
             </a><br>
             E-Mail:
-            <a href="mailto:hallo@luise-riegel-fotografie.de" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
-              hallo@luise-riegel-fotografie.de
+            <a href="mailto:luise_riegel_fotografie@gmx.de" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
+              luise_riegel_fotografie@gmx.de
             </a>
           </p>
         </div>
@@ -153,7 +153,7 @@
             Verarbeitung (Art.&nbsp;18), Datenübertragbarkeit (Art.&nbsp;20)
             und Widerspruch gegen die Verarbeitung (Art.&nbsp;21). Wendet euch
             dafür formlos an
-            <a href="mailto:hallo@luise-riegel-fotografie.de" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">hallo@luise-riegel-fotografie.de</a>.
+            <a href="mailto:luise_riegel_fotografie@gmx.de" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">luise_riegel_fotografie@gmx.de</a>.
           </p>
           <p class="mt-2">
             Außerdem habt ihr das Recht, euch bei einer

@@ -16,7 +16,7 @@
           <p class="mt-2">
             Luise Riegel Fotografie<br>
             Inhaberin: Luise Riegel<br>
-            Musterstraße 1<br>
+            Kapitänspromenade 15<br>
             23966 Wismar
           </p>
         </div>
@@ -25,12 +25,12 @@
           <h2 class="text-lg font-medium text-[#1a1a1f]">Kontakt</h2>
           <p class="mt-2">
             Telefon:
-            <a href="tel:+491701234567" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
-              +49 170 1234567
+            <a href="tel:+4915668863978" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
+              0156 68863978
             </a><br>
             E-Mail:
-            <a href="mailto:hallo@luise-riegel-fotografie.de" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
-              hallo@luise-riegel-fotografie.de
+            <a href="mailto:luise_riegel_fotografie@gmx.de" class="text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f]">
+              luise_riegel_fotografie@gmx.de
             </a>
           </p>
         </div>
@@ -46,7 +46,7 @@
           <h2 class="text-lg font-medium text-[#1a1a1f]">Verantwortlich für den Inhalt nach §&nbsp;18 Abs.&nbsp;2 MStV</h2>
           <p class="mt-2">
             Luise Riegel<br>
-            Musterstraße 1<br>
+            Kapitänspromenade 15<br>
             23966 Wismar
           </p>
         </div>

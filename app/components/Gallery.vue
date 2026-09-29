@@ -50,13 +50,13 @@ type Photo = { width: number; height: number; alt: string };
 
 const photos: Record<string, Photo> = {
   "IMG_8742.jpeg": {
-    width: 12077,
-    height: 8035,
+    width: 2000,
+    height: 1330,
     alt: "Eltern hocken auf einer Wiese und strecken ihrem Kleinkind die Hände entgegen",
   },
   "DSC_2465.jpeg": {
-    width: 2949,
-    height: 3829,
+    width: 1540,
+    height: 2000,
     alt: "Hände formen ein Herz auf einem Babybauch im grünen Kleid",
   },
   "IMG_1105.jpeg": {
@@ -65,8 +65,8 @@ const photos: Record<string, Photo> = {
     alt: "Babyhand umfasst den Finger eines Elternteils",
   },
   "IMG_5419.jpeg": {
-    width: 3013,
-    height: 4524,
+    width: 1332,
+    height: 2000,
     alt: "Kleinkind mit Mütze läuft durch buntes Herbstlaub in einer Allee",
   },
   "cb1b6a31-e7b0-4364-9163-31b778b20bb8.jpeg": {
@@ -75,18 +75,18 @@ const photos: Record<string, Photo> = {
     alt: "Familie steht Hand in Hand am Strand und blickt auf die Ostsee",
   },
   "IMG_9292.jpeg": {
-    width: 4024,
-    height: 6048,
+    width: 1331,
+    height: 2000,
     alt: "Kleines Mädchen im rosa Kleid mit Sonnenhut steht auf einem Feldweg",
   },
   "IMG_8738.jpeg": {
-    width: 11599,
-    height: 7717,
+    width: 2000,
+    height: 1331,
     alt: "Kleinkind mit Zopf blickt zu seinen Eltern, die auf einer Bank sitzen",
   },
   "Familien-Packet.jpeg": {
-    width: 8048,
-    height: 12096,
+    width: 1331,
+    height: 2000,
     alt: "Eltern küssen sich am Seeufer und halten ihr Kleinkind an den Händen",
   },
   "IMG_1104.jpeg": {
@@ -95,8 +95,8 @@ const photos: Record<string, Photo> = {
     alt: "Kleine Babyfüße auf einer weichen, hellen Decke",
   },
   "IMG_5415.jpeg": {
-    width: 2915,
-    height: 4482,
+    width: 1301,
+    height: 2000,
     alt: "Kleinkind mit Mütze schaut lachend hinter einem Baumstamm hervor",
   },
   "IMG_9637.jpeg": {
@@ -110,8 +110,8 @@ const photos: Record<string, Photo> = {
     alt: "Schlafendes Neugeborenes im hellen Body auf einer weißen Decke",
   },
   "IMG_8741.jpeg": {
-    width: 9210,
-    height: 7340,
+    width: 2000,
+    height: 1594,
     alt: "Kleinkind läuft über eine Wiese, im Hintergrund umarmen sich die Eltern",
   },
 };
