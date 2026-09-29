@@ -37,7 +37,7 @@ body {
 @layer components {
   /* Überschriften: zentral gepflegt, Layout-Varianten (z. B. whitespace-nowrap) bleiben im Markup */
   .heading-section {
-    @apply text-balance font-heading text-[clamp(1.75rem,1.2rem+2.6vw,3.4375rem)]
+    @apply text-balance font-heading text-[clamp(2.125rem,1.64rem+2.05vw,3.4375rem)]
     font-light leading-tight text-[#4a2e22];
   }
 

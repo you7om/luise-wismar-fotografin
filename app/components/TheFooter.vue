@@ -46,7 +46,7 @@
     </div>
 
     <div class="border-t border-[#a85c3f]/15">
-      <div class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 py-6 text-sm text-[#1a1a1f]/70 md:flex-row md:justify-between md:px-8 2xl:max-w-368">
+      <div class="mx-auto flex max-w-6xl flex-col items-center gap-5 px-6 py-6 md:gap-3 text-sm text-[#1a1a1f]/70 md:flex-row md:justify-between md:px-8 2xl:max-w-368">
         <p>&copy; {{ year }} Luise Riegel Fotografie. Alle Rechte vorbehalten.</p>
         <a
           href="https://lumiweb.de"

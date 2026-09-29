@@ -1,7 +1,7 @@
 <template>
   <section class="border-t border-[#1a1a1f]/10 bg-white" aria-labelledby="faq-heading">
     <div
-      class="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:px-8 md:py-24 lg:grid-cols-12 lg:gap-x-12 2xl:max-w-368"
+      class="mx-auto grid max-w-6xl gap-12 px-6 py-12 md:px-8 md:py-16 lg:grid-cols-12 lg:gap-x-12 2xl:max-w-368"
     >
       <!-- Gleiches Raster wie Kontakt und Footer: links 5, rechts 7 Spalten -->
       <div v-reveal class="max-w-xl lg:sticky lg:top-28 lg:col-span-5 lg:max-w-none lg:self-start">

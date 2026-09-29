@@ -5,7 +5,7 @@
         Haltet eure Momente fest
       </h2>
 
-      <div class="mt-12 grid gap-10 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+      <div class="mt-6 grid gap-10 sm:gap-6 md:mt-10 lg:grid-cols-3 lg:gap-8">
         <!-- Zwischen sm und lg als Querkarte (Foto links, Text rechts), sonst Hochkarte -->
         <article
           v-for="service in services"
@@ -28,15 +28,15 @@
           </div>
 
           <div class="flex flex-1 flex-col items-start px-4 text-left sm:px-6 sm:pb-5 lg:px-4 lg:pb-0">
-            <h3 class="mt-6 self-center heading-card text-center">
+            <h3 v-reveal="270" class="mt-6 self-center heading-card text-center">
               {{ service.title }}
             </h3>
-            <span class="mt-2 h-px w-10 self-center bg-[#a85c3f]/40" aria-hidden="true" />
+            <span v-reveal="270" class="mt-2 h-px w-10 self-center bg-[#a85c3f]/40" aria-hidden="true" />
 
-            <p class="mt-4 text-pretty text-base leading-relaxed text-[#1a1a1f]/95">
+            <p v-reveal="390" class="mt-4 text-pretty text-base leading-relaxed text-[#1a1a1f]/95">
               {{ service.description }}
             </p>
-            <ul v-if="service.includes" class="mt-4 space-y-1.5">
+            <ul v-if="service.includes" v-reveal="510" class="mt-4 space-y-1.5">
               <li v-for="item in service.includes" :key="item.text" class="flex items-center justify-start gap-2.5 text-base text-[#1a1a1f]/95">
                 <svg class="h-5 w-5 shrink-0 text-[#a85c3f]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <template v-if="item.icon === 'photo'">
@@ -64,7 +64,7 @@
               </li>
             </ul>
 
-            <p class="mt-auto self-center pt-6">
+            <p v-reveal="630" class="mt-auto self-center pt-6">
               <span class="inline-block rounded-full bg-[#eadfd2] px-9 py-2.5 text-lg font-medium text-[#5c3a2a] transition-colors duration-1000 ease-out group-hover:bg-[#e3d3c1]">
                 ab {{ service.price }}&nbsp;€
               </span>

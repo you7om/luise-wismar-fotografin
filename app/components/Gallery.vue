@@ -14,7 +14,7 @@
       <div
         v-for="layout in layouts"
         :key="layout.name"
-        class="mt-10"
+        class="mt-6 md:mt-10"
         :class="layout.class"
       >
         <div
