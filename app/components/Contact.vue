@@ -1,7 +1,8 @@
 <template>
   <section id="kontakt" class="scroll-mt-24 bg-[#fbf7f2]" aria-label="Kontakt">
-    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-12 md:gap-16 lg:grid-cols-12 lg:items-start md:px-8 md:py-16 2xl:max-w-368">
-      <div class="max-w-xl lg:col-span-5 lg:max-w-md">
+    <!-- Gleiches Raster wie FAQ und Footer: links 5, rechts 7 Spalten -->
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-12 md:px-8 md:py-16 lg:grid-cols-12 lg:items-start lg:gap-x-12 2xl:max-w-368">
+      <div v-reveal class="max-w-xl lg:col-span-5 lg:max-w-none">
         <h2 class="heading-section">
           Kontakt aufnehmen
         </h2>
@@ -47,6 +48,7 @@
       </div>
 
       <form
+        v-reveal
         class="flex w-full flex-col gap-5 lg:col-span-7"
         action="mailto:hallo@luise-riegel-fotografie.de"
         method="post"

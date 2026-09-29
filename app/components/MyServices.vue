@@ -1,7 +1,7 @@
 <template>
   <section id="leistungen" class="scroll-mt-24 bg-[#fbf7f2]" aria-label="Meine Leistungen">
     <div class="mx-auto max-w-6xl px-6 py-12 md:px-8 md:py-16 2xl:max-w-368">
-      <h2 class="heading-section md:whitespace-nowrap">
+      <h2 v-reveal class="heading-section text-center md:text-left md:whitespace-nowrap">
         Haltet eure Momente fest
       </h2>
 
@@ -10,16 +10,22 @@
         <article
           v-for="service in services"
           :key="service.title"
-          class="flex h-full flex-col rounded-[1.75rem] bg-[#fdfaf6] p-2.5 pb-7 text-center sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:pb-2.5 lg:flex lg:pb-7 ring-1 ring-[#a85c3f]/10 shadow-[0_1px_2px_rgba(143,74,48,0.06),0_8px_16px_-8px_rgba(143,74,48,0.14),0_24px_40px_-24px_rgba(143,74,48,0.2)]"
+          v-reveal="150"
+          class="group flex h-full flex-col rounded-[1.75rem] bg-[#fdfaf6] p-2.5 pb-7 text-center sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:pb-2.5 lg:flex lg:pb-7 ring-1 ring-[#a85c3f]/10 shadow-[0_1px_2px_rgba(143,74,48,0.06),0_8px_16px_-8px_rgba(143,74,48,0.14),0_24px_40px_-24px_rgba(143,74,48,0.2)] transition-[box-shadow,translate] duration-1000 ease-out motion-safe:hover:-translate-y-0.5 hover:shadow-[0_1px_2px_rgba(143,74,48,0.06),0_10px_20px_-8px_rgba(143,74,48,0.16),0_32px_48px_-24px_rgba(143,74,48,0.26)]"
         >
-          <NuxtImg
-            :src="service.photo"
-            sizes="100vw sm:40vw lg:33vw 2xl:460px"
-            :alt="service.alt"
-            :class="service.position"
-            class="aspect-6/7 w-full rounded-[1.25rem] rounded-b-[2.5rem] object-cover ring-1 ring-[#1a1a1f]/10 sm:aspect-auto sm:h-0 sm:min-h-full sm:rounded-[1.25rem] lg:aspect-6/7 lg:rounded-b-[2.5rem] lg:h-auto lg:min-h-0"
-            loading="lazy"
-          />
+          <!-- Rahmen schneidet den Hover-Zoom ab; Foto füllt ihn absolut aus -->
+          <div
+            class="photo-hover relative aspect-6/7 w-full rounded-[1.25rem] rounded-b-[2.5rem] ring-1 ring-[#1a1a1f]/10 sm:aspect-auto sm:rounded-[1.25rem] lg:aspect-6/7 lg:rounded-b-[2.5rem]"
+          >
+            <NuxtImg
+              :src="service.photo"
+              sizes="100vw sm:40vw lg:33vw 2xl:460px"
+              :alt="service.alt"
+              :class="service.position"
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
 
           <div class="flex flex-1 flex-col items-start px-4 text-left sm:px-6 sm:pb-5 lg:px-4 lg:pb-0">
             <h3 class="mt-6 self-center heading-card text-center">
@@ -59,7 +65,7 @@
             </ul>
 
             <p class="mt-auto self-center pt-6">
-              <span class="inline-block rounded-full bg-[#eadfd2] px-9 py-2.5 text-lg font-medium text-[#5c3a2a]">
+              <span class="inline-block rounded-full bg-[#eadfd2] px-9 py-2.5 text-lg font-medium text-[#5c3a2a] transition-colors duration-1000 ease-out group-hover:bg-[#e3d3c1]">
                 ab {{ service.price }}&nbsp;€
               </span>
             </p>

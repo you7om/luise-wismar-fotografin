@@ -9,7 +9,8 @@
       class="mx-auto grid max-w-6xl grid-cols-[minmax(0,24fr)_minmax(0,52fr)_minmax(0,24fr)] gap-x-1.5 px-6 py-12 md:px-8 md:py-16 lg:gap-x-2.5 2xl:max-w-368"
     >
       <div
-        class="relative col-start-1 row-start-1 mt-[18%] hidden aspect-2/3 sm:block ring-1 ring-[#1a1a1f]/10 lg:row-span-2"
+        v-reveal
+        class="photo-hover relative col-start-1 row-start-1 mt-[18%] hidden aspect-2/3 sm:block ring-1 ring-[#1a1a1f]/10 lg:row-span-2"
       >
         <NuxtImg
           src="/Galerie/DSC_2465.jpeg"
@@ -21,7 +22,8 @@
       </div>
 
       <div
-        class="relative col-span-3 row-start-1 aspect-4/3 self-start sm:col-span-1 sm:col-start-2 sm:aspect-3/2 overflow-hidden ring-1 ring-[#1a1a1f]/10"
+        v-reveal
+        class="photo-hover relative col-span-3 row-start-1 aspect-4/3 self-start sm:col-span-1 sm:col-start-2 sm:aspect-3/2 ring-1 ring-[#1a1a1f]/10"
       >
         <NuxtImg
           src="/IMG_8740.jpeg"
@@ -33,7 +35,8 @@
       </div>
 
       <div
-        class="relative col-start-3 row-start-1 mt-[18%] hidden aspect-2/3 sm:block ring-1 ring-[#1a1a1f]/10 lg:row-span-2"
+        v-reveal
+        class="photo-hover relative col-start-3 row-start-1 mt-[18%] hidden aspect-2/3 sm:block ring-1 ring-[#1a1a1f]/10 lg:row-span-2"
       >
         <NuxtImg
           src="/Galerie/IMG_9292.jpeg"
@@ -49,6 +52,7 @@
       >
         <h2
           id="shooting-ablauf"
+          v-reveal
           class="heading-script"
         >
           Euer Shooting
@@ -60,6 +64,7 @@
           <li
             v-for="(step, index) in steps"
             :key="step.title"
+            v-reveal="150"
             class="flex flex-col items-center px-3"
           >
             <span

@@ -1,7 +1,7 @@
 <template>
   <section id="portfolio" class="scroll-mt-24 bg-white" aria-label="Galerie">
     <div class="mx-auto max-w-6xl px-6 py-12 md:px-8 md:py-16 2xl:max-w-368">
-      <h2 class="heading-section lg:whitespace-nowrap">
+      <h2 v-reveal class="heading-section text-center md:text-left lg:whitespace-nowrap">
         Authentische Erinnerungen für die Ewigkeit
       </h2>
 
@@ -23,17 +23,22 @@
           class="flex flex-col"
           :class="layout.gap"
         >
-          <NuxtImg
+          <div
             v-for="file in column"
             :key="file"
-            :src="`/Galerie/${file}`"
-            :alt="photos[file]!.alt"
-            :sizes="layout.sizes"
+            v-reveal
             :style="{ aspectRatio: `${photos[file]!.width} / ${photos[file]!.height}` }"
-            class="min-h-0 w-full grow object-cover ring-1 ring-[#1a1a1f]/10"
-            loading="lazy"
-            decoding="async"
-          />
+            class="photo-hover relative min-h-0 w-full grow ring-1 ring-[#1a1a1f]/10 [--photo-hover-scale:1.02]"
+          >
+            <NuxtImg
+              :src="`/Galerie/${file}`"
+              :alt="photos[file]!.alt"
+              :sizes="layout.sizes"
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -113,32 +118,11 @@ const photos: Record<string, Photo> = {
 
 const layouts = [
   {
-    name: "eine Spalte",
-    class: "grid sm:hidden",
-    gap: "gap-4",
-    sizes: "100vw sm:100vw",
-    columns: [
-      [
-        "IMG_8742.jpeg",
-        "DSC_2465.jpeg",
-        "IMG_9637.jpeg",
-        "IMG_5419.jpeg",
-        "Neugeborenen-Packet.jpeg",
-        "Familien-Packet.jpeg",
-        "IMG_1105.jpeg",
-        "IMG_9292.jpeg",
-        "IMG_1104.jpeg",
-        "IMG_5415.jpeg",
-        "IMG_8738.jpeg",
-        "cb1b6a31-e7b0-4364-9163-31b778b20bb8.jpeg",
-        "IMG_8741.jpeg",
-      ],
-    ],
-  },
-  {
+    // Handy und Tablet: kleiner Abstand auf dem Handy, damit die Fotos groß bleiben
     name: "zwei Spalten",
-    class: "hidden grid-cols-2 gap-4 sm:grid lg:hidden",
-    gap: "gap-4",
+    class: "grid grid-cols-2 gap-2 sm:gap-4 lg:hidden",
+    gap: "gap-2 sm:gap-4",
+    // Wichtig: mit Breakpoint angeben, ein einzelnes "50vw" versteht @nuxt/image falsch
     sizes: "50vw sm:50vw",
     columns: [
       [

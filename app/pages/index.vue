@@ -8,7 +8,8 @@
 
     <MyServices />
     <Gallery />
-        <CallToAction />
+    <CallToAction />
+    <FaqSection />
 
     <Contact />
   </div>

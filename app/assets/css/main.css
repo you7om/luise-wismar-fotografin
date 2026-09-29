@@ -2,7 +2,8 @@
 
 @theme {
   --font-script: "Parisienne", "Brush Script MT", cursive;
-  --font-heading: "Jost", "Montserrat", sans-serif;
+  --font-heading: "Cormorant Garamond", "Georgia", serif;
+  --font-display: "Italiana", "Didot", serif;
 }
 
 :root {
@@ -36,13 +37,13 @@ body {
 @layer components {
   /* Überschriften: zentral gepflegt, Layout-Varianten (z. B. whitespace-nowrap) bleiben im Markup */
   .heading-section {
-    @apply text-balance font-heading text-[clamp(2.125rem,1.7rem+1.9vw,3rem)]
+    @apply text-balance font-heading text-[clamp(1.75rem,1.2rem+2.6vw,3.4375rem)]
     font-light leading-tight text-[#4a2e22];
   }
 
   .heading-card {
     @apply text-balance font-heading text-[1.625rem]
-    font-extralight leading-tight text-[#4a2e22] 2xl:text-[1.875rem];
+    font-light leading-tight text-[#4a2e22] 2xl:text-[1.875rem];
   }
 
   .heading-script {
@@ -79,6 +80,27 @@ body {
       0 1px 2px rgba(26, 26, 31, 0.04),
       0 14px 28px -14px rgba(168, 92, 63, 0.5);
     transform: translateY(-1px);
+  }
+
+  /* Sanfter Foto-Hover: langsames, leichtes Hineinzoomen im Rahmen.
+     Stärke pro Stelle über --photo-hover-scale anpassbar. Löst auch aus,
+     wenn eine umgebende .group (z. B. Karte) gehovert wird. */
+  .photo-hover {
+    overflow: hidden;
+  }
+
+  .photo-hover img {
+    transition:
+      transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+      filter 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .photo-hover:hover img,
+    .group:hover .photo-hover img {
+      transform: scale(var(--photo-hover-scale, 1.035));
+      filter: brightness(1.03) saturate(1.04);
+    }
   }
 
   .btn:focus-visible {

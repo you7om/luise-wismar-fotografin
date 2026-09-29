@@ -11,7 +11,8 @@ export default defineNuxtConfig({
     families: [
       { name: "Montserrat", provider: "google", weights: ["400 700"] },
       { name: "Parisienne", provider: "google" },
-      { name: "Jost", provider: "google", weights: ["200"] },
+      { name: "Cormorant Garamond", provider: "google", weights: ["300 500"] },
+      { name: "Italiana", provider: "google", weights: ["400"] },
     ],
   },
 
