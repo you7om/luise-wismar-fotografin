@@ -1,0 +1,48 @@
+# Apache-Einstellungen für All-Inkl (statischer Export mit `nuxt generate`)
+
+RewriteEngine On
+
+# Immer HTTPS und ohne www, damit jede Seite nur unter einer Adresse existiert.
+# Domain muss zu runtimeConfig.public.siteUrl in nuxt.config.ts passen.
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://luiseriegelfotografie.de%{REQUEST_URI} [L,R=301]
+
+# Unterseiten liegen als ordner/index.html vor, verlinkt sind sie ohne Schrägstrich
+# am Ende (/impressum). Apache soll deshalb nicht selbst auf /impressum/ umleiten.
+DirectorySlash Off
+
+# /impressum/ auf /impressum umleiten
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+# /impressum intern aus impressum/index.html ausliefern
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+)$ $1/index.html [L]
+
+# Eigene Fehlerseite (app/error.vue) statt der Standardseite des Servers
+ErrorDocument 404 /404.html
+
+# Kein Verzeichnis-Listing
+Options -Indexes
+
+<IfModule mod_headers.c>
+  # Dateien mit Hash im Namen ändern sich nie, neue Versionen bekommen einen neuen Namen
+  <If "%{REQUEST_URI} =~ m#^/(_nuxt|_fonts)/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+
+  # Fotos behalten ihren Namen, wenn sie ausgetauscht werden: eine Woche cachen
+  <FilesMatch "\.(jpe?g|png|webp|avif|svg)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # HTML immer frisch prüfen, damit Änderungen nach dem Hochladen sofort sichtbar sind
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

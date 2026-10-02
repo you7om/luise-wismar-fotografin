@@ -22,6 +22,22 @@ export default defineNuxtConfig({
     format: ["webp"],
   },
 
+  runtimeConfig: {
+    public: {
+      // Öffentliche Domain für Canonical-Links, Sitemap und Social-Vorschau
+      // (ohne Schrägstrich am Ende). Muss zur Weiterleitung in public/.htaccess passen.
+      siteUrl: "https://luiseriegelfotografie.de",
+      // Headless WordPress für Impressum und Datenschutz (ohne Schrägstrich am Ende)
+      cmsUrl: "https://admin.luiseriegelfotografie.de",
+    },
+  },
+
+  nitro: {
+    prerender: {
+      routes: ["/sitemap.xml", "/robots.txt"],
+    },
+  },
+
   typescript: {
     typeCheck: true,
   },
@@ -34,13 +50,12 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "",
       htmlAttrs: {
         lang: "de",
       },
       meta: [
-        { name: "description", content: "" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "theme-color", content: "#fbf7f2" },
       ],
       link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
     },

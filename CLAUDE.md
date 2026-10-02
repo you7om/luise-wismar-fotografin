@@ -55,8 +55,7 @@ bewussten Grund übernommen werden:
 
 - **Google Fonts lokal einbinden**, nicht per `<link>` von `fonts.googleapis.com`
   laden (Datenschutz, LG München 2022, kürzere Ladezeit). Dafür `@nuxt/fonts`
-  nutzen. **Aktuell wird "Material Symbols Outlined" in `nuxt.config.ts` per
-  Google-Link geladen – das muss korrigiert werden.**
+  nutzen. Icons als Inline-SVG statt Icon-Fonts.
 - **Cookie-Banner** einplanen, sobald Tracking oder eingebettete Dienste
   (z. B. Google Maps) genutzt werden. Bei Maps/Videos reicht oft Klick-vor-Laden.
 - **Performance:** Bilder komprimieren, `srcset`/`sizes` nutzen (`@nuxt/image`),

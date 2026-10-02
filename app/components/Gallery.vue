@@ -6,170 +6,133 @@
       </h2>
 
       <!--
-        Feste Spaltenaufteilung je Breite, rechnerisch so gewählt, dass alle
-        Spalten fast gleich hoch sind. Den Rest (wenige Pixel) gleichen die
-        Fotos per flex-grow + object-cover aus, damit die Unterkante gerade ist.
+        Die Fotos kommen aus WordPress (Seite „galerie“) und werden in ihrer Reihenfolge
+        Spalte für Spalte verteilt, sodass alle fast gleich hoch sind. Den Rest (wenige Pixel)
+        gleichen die Fotos per flex-grow + object-cover aus, damit die Unterkante gerade ist.
         Ausgeblendete Varianten laden dank loading="lazy" keine Bilder.
       -->
-      <div
-        v-for="layout in layouts"
-        :key="layout.name"
-        class="mt-6 md:mt-10"
-        :class="layout.class"
-      >
+      <template v-if="photos.length">
         <div
-          v-for="(column, index) in layout.columns"
-          :key="index"
-          class="flex flex-col"
-          :class="layout.gap"
+          v-for="layout in layouts"
+          :key="layout.name"
+          class="mt-6 md:mt-10"
+          :class="layout.class"
         >
           <div
-            v-for="file in column"
-            :key="file"
-            v-reveal
-            :style="{ aspectRatio: `${photos[file]!.width} / ${photos[file]!.height}` }"
-            class="photo-hover relative min-h-0 w-full grow ring-1 ring-[#1a1a1f]/10 [--photo-hover-scale:1.02]"
+            v-for="(column, index) in layout.columns"
+            :key="index"
+            class="flex flex-col"
+            :class="layout.gap"
           >
-            <NuxtImg
-              :src="`/Galerie/${file}`"
-              :alt="photos[file]!.alt"
-              :sizes="layout.sizes"
-              class="absolute inset-0 h-full w-full object-cover"
-              loading="lazy"
-              decoding="async"
-            />
+            <div
+              v-for="photo in column"
+              :key="photo.id"
+              v-reveal
+              :style="{ aspectRatio: `${photo.width} / ${photo.height}` }"
+              class="photo-hover relative min-h-0 w-full grow ring-1 ring-[#1a1a1f]/10 [--photo-hover-scale:1.02]"
+            >
+              <img
+                :src="photo.src"
+                :srcset="photo.srcset"
+                :sizes="layout.sizes"
+                :width="photo.width"
+                :height="photo.height"
+                :alt="photo.alt"
+                class="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
           </div>
         </div>
+      </template>
+
+      <div v-else-if="status === 'error'" class="mt-6 text-base leading-relaxed text-[#1a1a1f]/80 md:mt-10">
+        <p>Die Fotos können gerade nicht geladen werden.</p>
+        <button
+          type="button"
+          class="mt-2 cursor-pointer text-[#a85c3f] underline decoration-transparent underline-offset-4 hover:decoration-[#a85c3f] focus-visible:decoration-[#a85c3f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a85c3f]"
+          @click="refresh()"
+        >
+          Erneut versuchen
+        </button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-type Photo = { width: number; height: number; alt: string };
+import type { CmsBild } from "~/composables/useCmsSeite";
 
-const photos: Record<string, Photo> = {
-  "IMG_8742.jpeg": {
-    width: 2000,
-    height: 1330,
-    alt: "Eltern hocken auf einer Wiese und strecken ihrem Kleinkind die Hände entgegen",
-  },
-  "DSC_2465.jpeg": {
-    width: 1540,
-    height: 2000,
-    alt: "Hände formen ein Herz auf einem Babybauch im grünen Kleid",
-  },
-  "IMG_1105.jpeg": {
-    width: 1206,
-    height: 1035,
-    alt: "Babyhand umfasst den Finger eines Elternteils",
-  },
-  "IMG_5419.jpeg": {
-    width: 1332,
-    height: 2000,
-    alt: "Kleinkind mit Mütze läuft durch buntes Herbstlaub in einer Allee",
-  },
-  "cb1b6a31-e7b0-4364-9163-31b778b20bb8.jpeg": {
-    width: 1600,
-    height: 1064,
-    alt: "Familie steht Hand in Hand am Strand und blickt auf die Ostsee",
-  },
-  "IMG_9292.jpeg": {
-    width: 1331,
-    height: 2000,
-    alt: "Kleines Mädchen im rosa Kleid mit Sonnenhut steht auf einem Feldweg",
-  },
-  "IMG_8738.jpeg": {
-    width: 2000,
-    height: 1331,
-    alt: "Kleinkind mit Zopf blickt zu seinen Eltern, die auf einer Bank sitzen",
-  },
-  "Familien-Packet.jpeg": {
-    width: 1331,
-    height: 2000,
-    alt: "Eltern küssen sich am Seeufer und halten ihr Kleinkind an den Händen",
-  },
-  "IMG_1104.jpeg": {
-    width: 1206,
-    height: 770,
-    alt: "Kleine Babyfüße auf einer weichen, hellen Decke",
-  },
-  "IMG_5415.jpeg": {
-    width: 1301,
-    height: 2000,
-    alt: "Kleinkind mit Mütze schaut lachend hinter einem Baumstamm hervor",
-  },
-  "IMG_9637.jpeg": {
-    width: 1206,
-    height: 891,
-    alt: "Mutter breitet auf einer Wiese die Arme aus, ihre Tochter läuft auf sie zu",
-  },
-  "Neugeborenen-Packet.jpeg": {
-    width: 907,
-    height: 718,
-    alt: "Schlafendes Neugeborenes im hellen Body auf einer weißen Decke",
-  },
-  "IMG_8741.jpeg": {
-    width: 2000,
-    height: 1594,
-    alt: "Kleinkind läuft über eine Wiese, im Hintergrund umarmen sich die Eltern",
-  },
-};
+// Nur die Bilddaten landen im HTML, nicht die ganze API-Antwort (inkl. fotos_source)
+const { data, status, refresh } = useCmsSeite("galerie", (seite) =>
+  alsListe(acfFeld(seite, "fotos"))
+    .map(cmsBild)
+    .filter((bild): bild is CmsBild => bild !== null),
+);
 
-const layouts = [
+const photos = computed(() =>
+  (data.value ?? []).map((photo, index) => ({
+    ...photo,
+    // Neutral benannt, falls in WordPress kein Alternativtext gepflegt ist
+    alt: photo.alt || `Portfolio-Foto ${index + 1}`,
+  })),
+);
+
+/**
+ * Teilt die Fotos in `count` Spalten auf, ohne die Reihenfolge aus WordPress zu ändern:
+ * Die ersten Fotos kommen von oben nach unten in die linke Spalte, die nächsten in die
+ * mittlere usw. Gesucht wird nur, wo jede Spalte beginnt, damit alle fast gleich hoch sind.
+ *
+ * `gap` ist der Abstand zwischen zwei Fotos im Verhältnis zur Spaltenbreite.
+ */
+function distribute<T extends { width: number; height: number }>(items: T[], count: number, gap: number) {
+  // sum[i] = Höhe der ersten i Fotos (je Foto inkl. eines Abstands), bezogen auf die Spaltenbreite
+  const sum = [0];
+  items.forEach((item, i) => sum.push(sum[i]! + item.height / item.width + gap));
+  const columnHeight = (from: number, to: number) => sum[to]! - sum[from]! - gap;
+
+  const columns = Math.min(count, items.length);
+  let bestStarts: number[] = [];
+  let bestSpread = Infinity;
+
+  // Alle möglichen Spaltenanfänge durchprobieren (bei ein paar Dutzend Fotos sehr schnell)
+  const tryStarts = (starts: number[]) => {
+    if (starts.length === columns) {
+      const ends = [...starts.slice(1), items.length];
+      const heights = starts.map((start, i) => columnHeight(start, ends[i]!));
+      const spread = Math.max(...heights) - Math.min(...heights);
+      if (spread < bestSpread) {
+        bestSpread = spread;
+        bestStarts = starts;
+      }
+      return;
+    }
+    const last = starts[starts.length - 1]!;
+    for (let next = last + 1; next <= items.length - (columns - starts.length); next++) {
+      tryStarts([...starts, next]);
+    }
+  };
+  if (columns > 0) tryStarts([0]);
+
+  return bestStarts.map((start, i) => items.slice(start, bestStarts[i + 1] ?? items.length));
+}
+
+const layouts = computed(() => [
   {
     // Handy und Tablet: kleiner Abstand auf dem Handy, damit die Fotos groß bleiben
     name: "zwei Spalten",
     class: "grid grid-cols-2 gap-2 sm:gap-4 lg:hidden",
     gap: "gap-2 sm:gap-4",
-    // Wichtig: mit Breakpoint angeben, ein einzelnes "50vw" versteht @nuxt/image falsch
-    sizes: "50vw sm:50vw",
-    columns: [
-      [
-        "IMG_8742.jpeg",
-        "DSC_2465.jpeg",
-        "IMG_1105.jpeg",
-        "Familien-Packet.jpeg",
-        "Neugeborenen-Packet.jpeg",
-        "IMG_5419.jpeg",
-      ],
-      [
-        "IMG_9292.jpeg",
-        "cb1b6a31-e7b0-4364-9163-31b778b20bb8.jpeg",
-        "IMG_5415.jpeg",
-        "IMG_1104.jpeg",
-        "IMG_8738.jpeg",
-        "IMG_9637.jpeg",
-        "IMG_8741.jpeg",
-      ],
-    ],
+    sizes: "50vw",
+    columns: distribute(photos.value, 2, 0.05),
   },
   {
     name: "drei Spalten",
     class: "hidden grid-cols-3 gap-6 lg:grid",
     gap: "gap-6",
-    sizes: "33vw 2xl:460px",
-    columns: [
-      [
-        "IMG_8742.jpeg",
-        "IMG_5419.jpeg",
-        "IMG_1105.jpeg",
-        "IMG_8738.jpeg",
-        "cb1b6a31-e7b0-4364-9163-31b778b20bb8.jpeg",
-      ],
-      [
-        "DSC_2465.jpeg",
-        "Neugeborenen-Packet.jpeg",
-        "IMG_9292.jpeg",
-        "IMG_8741.jpeg",
-      ],
-      [
-        "IMG_9637.jpeg",
-        "Familien-Packet.jpeg",
-        "IMG_1104.jpeg",
-        "IMG_5415.jpeg",
-      ],
-    ],
+    sizes: "(min-width: 1536px) 460px, 33vw",
+    columns: distribute(photos.value, 3, 0.06),
   },
-];
+]);
 </script>

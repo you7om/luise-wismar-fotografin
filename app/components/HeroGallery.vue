@@ -1,21 +1,24 @@
 <template>
   <section class="relative pt-2 md:pt-4" aria-label="Fotogalerie">
+    <!-- data-ready setzt das Inline-Script unten, sobald die Startposition stimmt -->
     <div
       ref="scroller"
-      class="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto transition-opacity duration-700 ease-out"
-      :class="isReady ? 'opacity-100' : 'opacity-0'"
+      data-hero-track
+      class="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto opacity-0 transition-opacity duration-300 ease-out data-ready:opacity-100"
       @touchstart="stopAutoplay"
       @wheel="onWheel"
     >
       <NuxtImg
         v-for="(image, index) in trackImages"
         sizes="88vw sm:72vw lg:54vw xl:46vw"
+        quality="80"
         :key="`${image.src}-${index}`"
         :src="image.src"
-        :alt="index < images.length ? image.alt : ''"
+        :alt="index < images.length ? `Titelfoto ${index + 1}` : ''"
         :aria-hidden="index >= images.length"
         class="aspect-4/3 w-[88%] flex-none snap-center object-cover ring-1 ring-black/5 sm:w-[72%] lg:w-[54%] xl:w-[46%]"
         :loading="index <= 1 ? 'eager' : 'lazy'"
+        :fetchpriority="index === 1 ? 'high' : undefined"
       />
     </div>
 
@@ -69,19 +72,10 @@
 
 <script setup lang="ts">
 const images = [
-  {
-    src: "/hero/hero-1.jpeg",
-    alt: "",
-  },
-  { src: "/hero/hero-2.jpeg", alt: "" },
-  {
-    src: "/hero/hero-3.jpeg",
-    alt: "",
-  },
-  {
-    src: "/hero/hero-4.jpeg",
-    alt: "",
-  },
+  { src: "/hero/hero-1.jpeg" },
+  { src: "/hero/hero-2.jpeg" },
+  { src: "/hero/hero-3.jpeg" },
+  { src: "/hero/hero-4.jpeg" },
 ];
 
 // Der Track wird verdoppelt, damit der Loop nahtlos wirkt: sobald die
@@ -89,9 +83,23 @@ const images = [
 const trackImages = [...images, ...images];
 
 const scroller = ref<HTMLElement | null>(null);
-const isReady = ref(false);
 
 const GAP_PX = 16;
+
+// Startposition (zweites Foto mittig) schon beim Einlesen des HTML setzen,
+// nicht erst nach dem Laden von Vue: so ist das Hero-Bild sofort sichtbar,
+// ohne dass es springt. Rechnet wie cardOffset(el, 1).
+useHead({
+  script: [
+    {
+      key: "hero-track-start",
+      tagPosition: "bodyClose",
+      innerHTML: `(function(){var el=document.querySelector("[data-hero-track]");if(!el||el.hasAttribute("data-ready"))return;var img=el.querySelector("img");if(img)el.scrollLeft=img.clientWidth+${GAP_PX};el.setAttribute("data-ready","")})()`,
+    },
+  ],
+  // Ohne JavaScript das Karussell trotzdem zeigen
+  noscript: [{ key: "hero-track-noscript", innerHTML: "<style>[data-hero-track]{opacity:1}</style>" }],
+});
 const AUTOPLAY_MS = 5000;
 let autoplayTimer: ReturnType<typeof setInterval> | undefined;
 
@@ -151,15 +159,14 @@ function startAutoplay() {
 }
 
 onMounted(() => {
+  // Normalfall: das Inline-Script hat schon positioniert, dann nichts
+  // anfassen (sonst springt es zurück, falls schon gewischt wurde).
+  // Nur bei Navigation innerhalb der Seite hier nachholen.
   const el = scroller.value;
-  if (el) {
+  if (el && !el.hasAttribute("data-ready")) {
     el.scrollLeft = cardOffset(el, 1);
+    requestAnimationFrame(() => el.setAttribute("data-ready", ""));
   }
-  // Erst jetzt einblenden: so ist nie ein falsch positioniertes Bild zu
-  // sehen, sondern direkt das zweite Foto zentriert.
-  requestAnimationFrame(() => {
-    isReady.value = true;
-  });
   startAutoplay();
 });
 

@@ -48,19 +48,29 @@
       </div>
 
       <form
+        ref="formEl"
         v-reveal
         class="flex w-full flex-col gap-5 lg:col-span-7"
-        action="mailto:luise_riegel_fotografie@gmx.de"
+        action="/kontakt.php"
         method="post"
-        enctype="text/plain"
+        :aria-busy="status === 'sending'"
+        @submit.prevent="submit"
       >
+        <!-- Spam-Schutz: für Menschen unsichtbar, Bots füllen es aus -->
+        <div class="absolute left-[-9999px] h-px w-px overflow-hidden" aria-hidden="true">
+          <label for="contact-website">Website</label>
+          <input id="contact-website" type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <input type="hidden" name="t" :value="startedAt">
+
         <div class="grid gap-5 sm:grid-cols-2">
           <div class="flex flex-col gap-1.5">
             <label for="contact-name" class="text-sm font-medium text-[#1a1a1f]">Name</label>
             <input
               id="contact-name"
               type="text"
-              name="Name"
+              name="name"
+              maxlength="120"
               autocomplete="name"
               required
               class="rounded-lg border border-[#1a1a1f]/15 bg-white px-4 py-3 text-base text-[#1a1a1f] placeholder:text-[#1a1a1f]/40 focus:border-[#a85c3f] focus:outline-none"
@@ -72,7 +82,8 @@
             <input
               id="contact-email"
               type="email"
-              name="E-Mail"
+              name="email"
+              maxlength="200"
               autocomplete="email"
               inputmode="email"
               required
@@ -86,7 +97,7 @@
           <div class="relative">
             <select
               id="contact-type"
-              name="Art des Shootings"
+              name="type"
               required
               class="w-full appearance-none rounded-lg border border-[#1a1a1f]/15 bg-white py-3 pl-4 pr-10 text-base text-[#1a1a1f] focus:border-[#a85c3f] focus:outline-none"
             >
@@ -107,7 +118,8 @@
           <input
             id="contact-period"
             type="text"
-            name="Wunschzeitraum"
+            name="period"
+            maxlength="200"
             placeholder="z. B. Mitte Mai bis Juni"
             class="rounded-lg border border-[#1a1a1f]/15 bg-white px-4 py-3 text-base text-[#1a1a1f] placeholder:text-[#1a1a1f]/40 focus:border-[#a85c3f] focus:outline-none"
           >
@@ -117,7 +129,8 @@
           <label for="contact-message" class="text-sm font-medium text-[#1a1a1f]">Nachricht</label>
           <textarea
             id="contact-message"
-            name="Nachricht"
+            name="message"
+            maxlength="5000"
             rows="5"
             required
             class="resize-none rounded-lg border border-[#1a1a1f]/15 bg-white px-4 py-3 text-base text-[#1a1a1f] placeholder:text-[#1a1a1f]/40 focus:border-[#a85c3f] focus:outline-none"
@@ -130,9 +143,32 @@
           zu.
         </p>
 
-        <button type="submit" class="btn">
-          Nachricht senden
-        </button>
+        <div class="flex flex-col gap-4">
+          <button type="submit" class="btn" :disabled="status === 'sending'">
+            <svg v-if="status === 'sending'" class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="2.5" />
+              <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+            {{ status === 'sending' ? 'Wird gesendet …' : 'Nachricht senden' }}
+          </button>
+
+          <div aria-live="polite">
+            <p
+              v-if="status === 'success'"
+              class="text-pretty border-l-2 border-[#5f7a5a] pl-4 text-base leading-relaxed text-[#1a1a1f]"
+            >
+              Danke für eure Nachricht! Sie ist bei mir angekommen, und ich
+              melde mich in den nächsten Tagen persönlich bei euch.
+            </p>
+            <p
+              v-else-if="status === 'error'"
+              class="text-pretty border-l-2 border-[#a8402f] pl-4 text-base leading-relaxed text-[#1a1a1f]"
+            >
+              {{ errorText }} Schreibt mir gern direkt an
+              <a :href="mailChannel.href" class="font-medium text-[#a85c3f] underline underline-offset-2">{{ mailChannel.value }}</a>.
+            </p>
+          </div>
+        </div>
       </form>
     </div>
   </section>
@@ -142,8 +178,8 @@
 const channels = [
   {
     label: "E-Mail",
-    value: "luise_riegel_fotografie@gmx.de",
-    href: "mailto:luise_riegel_fotografie@gmx.de",
+    value: "anfrage@luiseriegelfotografie.de",
+    href: "mailto:anfrage@luiseriegelfotografie.de",
     icon: "mail",
     external: false,
   },
@@ -162,4 +198,35 @@ const channels = [
     external: true,
   },
 ];
+
+const mailChannel = channels[0]!;
+
+const formEl = ref<HTMLFormElement>();
+const status = ref<"idle" | "sending" | "success" | "error">("idle");
+const errorText = ref("");
+// Zeitpunkt, ab dem das Formular sichtbar ist (Spam-Schutz in kontakt.php)
+const startedAt = ref(0);
+
+onMounted(() => {
+  startedAt.value = Date.now();
+});
+
+async function submit() {
+  if (!formEl.value || status.value === "sending") return;
+
+  status.value = "sending";
+  try {
+    await $fetch("/kontakt.php", { method: "POST", body: new FormData(formEl.value) });
+    status.value = "success";
+    formEl.value.reset();
+    startedAt.value = Date.now();
+  }
+  catch (error) {
+    const code = (error as { statusCode?: number }).statusCode;
+    errorText.value = code === 422
+      ? "Bitte prüft eure Angaben, vor allem die E-Mail-Adresse."
+      : "Das Senden hat leider nicht geklappt.";
+    status.value = "error";
+  }
+}
 </script>

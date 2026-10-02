@@ -14,8 +14,9 @@
       >
         <NuxtImg
           src="/Galerie/DSC_2465.jpeg"
-          alt="Hände formen ein Herz auf einem Babybauch"
+          alt="Shooting-Foto 1"
           sizes="25vw 2xl:340px"
+          quality="80"
           class="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
         />
@@ -27,8 +28,9 @@
       >
         <NuxtImg
           src="/IMG_8740.jpeg"
-          alt="Familie sitzt mit ihrem Kleinkind entspannt auf einer Wiese"
+          alt="Shooting-Foto 2"
           sizes="135vw sm:75vw 2xl:1000px"
+          quality="80"
           class="absolute inset-0 h-full w-full origin-[50%_22%] scale-[1.35] object-cover"
           loading="lazy"
         />
@@ -40,8 +42,9 @@
       >
         <NuxtImg
           src="/Galerie/IMG_9292.jpeg"
-          alt="Kleines Mädchen im rosa Kleid mit Sonnenhut steht auf einem Feldweg"
+          alt="Shooting-Foto 3"
           sizes="25vw 2xl:340px"
+          quality="80"
           class="absolute inset-0 h-full w-full object-cover object-[50%_40%]"
           loading="lazy"
         />

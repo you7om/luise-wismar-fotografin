@@ -103,6 +103,12 @@ body {
     }
   }
 
+  .btn:disabled {
+    cursor: progress;
+    opacity: 0.7;
+    transform: none;
+  }
+
   .btn:focus-visible {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;

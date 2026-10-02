@@ -77,7 +77,8 @@
           <NuxtImg
             src="/about_photo.jpeg"
             sizes="384px sm:448px lg:620px"
-            alt="Luise Riegel mit Kamera in der Hand, lächelnd im Freien"
+            alt="Porträt von Luise Riegel"
+            loading="lazy"
             class="relative h-full w-full rounded-full object-cover 
             object-[50%_30%] ring-1 ring-[#1a1a1f]/10"
           />

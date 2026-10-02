@@ -1,9 +1,9 @@
 <template>
   <section class="bg-white" aria-label="Markenversprechen">
     <div class="mx-auto flex max-w-6xl flex-col items-center px-6 py-12 text-center md:px-8 md:py-16">
-      <p v-reveal class="heading-script lg:whitespace-nowrap">
+      <h1 v-reveal class="heading-script lg:whitespace-nowrap">
         Natürliche Familienfotos ohne steifes Posieren
-      </p>
+      </h1>
       <p v-reveal="120" class="mt-4 max-w-2xl text-pretty text-lg leading-relaxed text-[#1a1a1f]/95">
         Vor meiner Kamera müsst ihr nichts können und nicht perfekt posieren.
         Seid einfach ihr selbst, genau das macht eure Bilder aus.
