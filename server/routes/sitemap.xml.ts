@@ -1,4 +1,4 @@
-// Seiten für Suchmaschinen; design-guide ist intern und fehlt hier bewusst
+// Seiten für Suchmaschinen
 const pages = ["/", "/impressum", "/datenschutz"];
 
 export default defineEventHandler((event) => {
