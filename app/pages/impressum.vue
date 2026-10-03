@@ -1,11 +1,14 @@
 <template>
   <section class="bg-white">
     <div class="mx-auto max-w-6xl px-6 py-12 md:px-8 md:py-16 2xl:max-w-368">
-      <h1 class="heading-script">
-        Impressum
-      </h1>
+      <!-- Textspalte mittig auf der Seite, der Text selbst bleibt linksbündig (besser lesbar) -->
+      <div class="mx-auto max-w-[68ch]">
+        <h1 class="heading-script">
+          Impressum
+        </h1>
 
-      <CmsInhalt slug="impressum" />
+        <CmsInhalt slug="impressum" />
+      </div>
     </div>
   </section>
 </template>

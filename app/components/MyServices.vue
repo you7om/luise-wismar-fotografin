@@ -93,40 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CmsBild } from "~/composables/useCmsSeite";
-
-type Icon = "photo" | "gallery" | "sun" | "home" | "check";
-
-interface Service {
-  title: string;
-  photo: CmsBild | null;
-  description: string;
-  includes: { icon: Icon; text: string }[];
-  price: string;
-}
-
-// Werte aus dem Auswahlfeld in WordPress; Unbekanntes bekommt ein neutrales Häkchen
-const icons: Record<string, Icon> = { bild: "photo", galerie: "gallery", sonne: "sun", haus: "home" };
-
-const text = (wert: unknown) => (typeof wert === "string" ? wert.trim() : "");
-
-// Nur die Kartendaten landen im HTML, nicht die ganze API-Antwort (inkl. leistungen_source)
-const { data, status, refresh } = useCmsSeite("leistungen", (seite) =>
-  alsListe<Record<string, unknown>>(acfFeld(seite, "leistungen"))
-    .map(
-      (karte): Service => ({
-        title: text(karte.titel),
-        photo: cmsBild(karte.foto),
-        description: text(karte.beschreibung),
-        includes: alsListe<Record<string, unknown>>(karte.features)
-          .map((feature) => ({ icon: icons[text(feature.icon).toLowerCase()] ?? "check", text: text(feature.text) }))
-          .filter((feature) => feature.text),
-        // Geschütztes Leerzeichen vor dem Euro-Zeichen, damit „€“ nie allein umbricht
-        price: text(karte.preis).replace(/\s+€/, " €"),
-      }),
-    )
-    .filter((service) => service.title),
-);
+const { data, status, refresh } = useLeistungen();
 
 const services = computed(() => data.value ?? []);
 

@@ -74,6 +74,9 @@ export function cmsBild(wert: unknown): CmsBild | null {
   return { id: bild.id, ...haupt, srcset, alt: (bild.alt ?? "").trim() };
 }
 
+// Stille Nachlade-Abrufe im Browser, die gerade laufen (je Slug)
+const laufendeAbrufe = new Map<string, Promise<CmsSeite[]>>();
+
 /**
  * Lädt eine Seite per Slug aus dem Headless WordPress (runtimeConfig.public.cmsUrl).
  * Beim `nuxt generate` wird der Inhalt ins statische HTML eingebaut. Im Browser wird
@@ -104,8 +107,16 @@ export function useCmsSeite<T = CmsSeite>(
   // Bewusst $fetch statt refresh(): ändert weder status noch error,
   // die Seite flackert also nicht und ein Fehler löscht den vorhandenen Inhalt nicht.
   onMounted(async () => {
+    // Nutzen mehrere Komponenten dieselbe Seite (z. B. „leistungen“), nur einmal abrufen
+    let laufend = laufendeAbrufe.get(slug);
+    if (!laufend) {
+      laufend = $fetch<CmsSeite[]>("/wp-json/wp/v2/pages", anfrage);
+      laufendeAbrufe.set(slug, laufend);
+      laufend.finally(() => laufendeAbrufe.delete(slug)).catch(() => {});
+    }
+
     try {
-      const aktuell = ersteSeite(await $fetch<CmsSeite[]>("/wp-json/wp/v2/pages", anfrage));
+      const aktuell = ersteSeite(await laufend);
       if (aktuell) {
         // Gleiche Umwandlung wie oben; Nuxts generische Typen erkennen das nicht von selbst
         seite.data.value = aktuell as typeof seite.data.value;

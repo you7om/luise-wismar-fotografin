@@ -138,9 +138,8 @@
         </div>
 
         <p class="-mt-1 text-pretty text-sm leading-relaxed text-[#1a1a1f]/75">
-          Mit dem Absenden stimmt ihr der Verarbeitung eurer Daten gemäß der
-          <NuxtLink to="/datenschutz" class="underline underline-offset-2 hover:text-[#a85c3f]">Datenschutzerklärung</NuxtLink>
-          zu.
+          Eure Angaben nutze ich nur, um eure Anfrage zu beantworten. Mehr dazu in der
+          <NuxtLink to="/datenschutz" class="underline underline-offset-2 hover:text-[#a85c3f]">Datenschutzerklärung</NuxtLink>.
         </p>
 
         <div class="flex flex-col gap-4">
