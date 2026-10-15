@@ -184,8 +184,8 @@ const channels = [
   },
   {
     label: "WhatsApp",
-    value: "0156 68863978",
-    href: "https://wa.me/4915668863978",
+    value: "01556 8863978",
+    href: "https://wa.me/4915568863978",
     icon: "whatsapp",
     external: true,
   },

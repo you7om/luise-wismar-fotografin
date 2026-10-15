@@ -44,7 +44,7 @@ useHead({
         description,
         url: `${origin}/`,
         image: `${origin}/og-image.jpg`,
-        telephone: "+4915668863978",
+        telephone: "+4915568863978",
         email: "anfrage@luiseriegelfotografie.de",
         // Ohne lesbare Preise fällt das Feld weg (JSON.stringify lässt undefined aus)
         priceRange: preisspanne(leistungen.value ?? []),
